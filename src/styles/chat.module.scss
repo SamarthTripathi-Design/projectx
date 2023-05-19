@@ -1,0 +1,25 @@
+.contact__container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  place-items: center;
+}
+
+.chatimg {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+.img__container {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.content__container {
+  grid-area: 1 / 2 / 2 / 5;
+}
+
+.timestamp__container {
+  grid-area: 1 / 5 / 2 / 6;
+}
