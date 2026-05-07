@@ -1,0 +1,43 @@
+.table-wrapper {
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 400px;
+  background-color: var(--color-elements);
+}
+
+.table thead tr {
+  text-align: left;
+  position: sticky;
+  top: 0;
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  font-size: 14px;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.table tbody tr:last-of-type {
+  border-bottom: 2px solid #dddddd; /* A nice "finish" line at the bottom */
+}
+
+td {
+  white-space: nowrap;
+}
+
+td:first-child,
+th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: var(--color-elements);
+}

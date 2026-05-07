@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.app_container {
+  padding: 50px 80px;
+}
+
+input,
+button,
+select {
+  font-family: inherit;
+}
+
+:root {
+  /* raw colour tokens */
+  --blue-900: hsl(209, 23%, 22%);
+  --blue-950: hsl(207, 26%, 17%);
+  --grey-950: hsl(200, 15%, 8%);
+  --grey-400: hsl(0, 0%, 50%);
+  --grey-50: hsl(0, 0%, 96%);
+  --white: hsl(0, 100%, 100%);
+}
+
+body.light {
+  --color-bg: var(--grey-50);
+  --color-elements: var(--white);
+  --color-text: var(--grey-950);
+}
+
+body.dark {
+  --color-bg: var(--blue-950);
+  --color-elements: var(--blue-900);
+  --color-text: var(--white);
+}
+
+.light,
+.dark {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}

@@ -1,0 +1,55 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.row1,
+.row2,
+.row3 {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.emp_name_cont,
+.emp_email_cont,
+.emp_dept_cont,
+.emp_startdate_cont,
+.emp_loc_cont,
+.emp_type_cont {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-width: 250px;
+}
+
+.emp_name,
+.emp_email,
+.emp_dept,
+.emp_doj,
+.emp_loc,
+.emp_employmenttype {
+  width: 100%; /* Fills the container */
+  height: 38px;
+  outline: none;
+  border: none;
+  padding: 0 10px;
+  color: var(--color-text);
+  border-bottom: 1px solid rgb(0, 0, 0, 0.2);
+  background-color: var(--color-elements);
+  font-size: 14px;
+}
+
+.emp_name::placeholder,
+.emp_email::placeholder {
+  color: var(--color-text);
+}
+
+.emp_dept,
+.emp_loc,
+.emp_employmenttype {
+  appearance: none;
+}

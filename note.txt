@@ -1,0 +1,10 @@
+check .env
+authentication
+authorization
+protected routes
+constants - action, url,
+edit and delete
+
+new- employment type,location
+
+overlay - background events like scrolling and all

@@ -1,0 +1,22 @@
+.header_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: gray; */
+}
+
+.theme {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 300;
+  background: none;
+  color: inherit;
+}
