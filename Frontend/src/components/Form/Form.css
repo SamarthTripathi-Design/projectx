@@ -18,11 +18,11 @@ form {
 .emp_dept_cont,
 .emp_startdate_cont,
 .emp_loc_cont,
-.emp_type_cont {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1;
+.emp_type_cont,
+.input_cont {
+  display: grid;
+  grid-template-rows: auto 38px 20px; /* label, input, error */
+  gap: 8px;
   min-width: 250px;
 }
 
@@ -31,9 +31,10 @@ form {
 .emp_dept,
 .emp_doj,
 .emp_loc,
-.emp_employmenttype {
+.emp_type {
   width: 100%; /* Fills the container */
   height: 38px;
+  flex-shrink: 0;
   outline: none;
   border: none;
   padding: 0 10px;
@@ -43,6 +44,10 @@ form {
   font-size: 14px;
 }
 
+.input-error {
+  border-bottom: 1px solid #e55050;
+}
+
 .emp_name::placeholder,
 .emp_email::placeholder {
   color: var(--color-text);
@@ -50,6 +55,28 @@ form {
 
 .emp_dept,
 .emp_loc,
-.emp_employmenttype {
+.emp_type {
   appearance: none;
+}
+
+form .submit-btn {
+  width: 100px;
+  height: 40px;
+  padding: 0px 10px;
+  background-color: var(--action-color);
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+}
+
+.btn-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.error-text {
+  font-size: 14px;
+  color: #e55050;
 }

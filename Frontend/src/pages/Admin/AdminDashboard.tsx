@@ -7,7 +7,6 @@ import { useMemo } from "react";
 import type { Employee } from "../../types";
 import { MdOutlineEdit, MdDeleteOutline } from "react-icons/md";
 import "./AdminDashboard.css";
-import Modal from "../../components/Modal/Modal";
 
 function AdminDashboard() {
   const context = useContext(EmployeeContext);

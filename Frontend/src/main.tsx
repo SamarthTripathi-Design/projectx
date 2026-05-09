@@ -8,5 +8,6 @@ createRoot(document.getElementById("root")!).render(
     <EmployeeProvider>
       <App />
     </EmployeeProvider>
+    ,
   </StrictMode>,
 );

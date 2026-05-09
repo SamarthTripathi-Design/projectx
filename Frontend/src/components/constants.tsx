@@ -1,4 +1,5 @@
 export const indianStates = [
+  { label: "Select", value: "" },
   { label: "Andhra Pradesh", value: "AP" },
   { label: "Arunachal Pradesh", value: "AR" },
   { label: "Assam", value: "AS" },

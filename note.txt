@@ -8,3 +8,5 @@ edit and delete
 new- employment type,location
 
 overlay - background events like scrolling and all
+
+accebility and also hover and focus effects

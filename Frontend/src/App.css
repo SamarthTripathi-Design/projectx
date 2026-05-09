@@ -28,6 +28,8 @@ select {
   --grey-400: hsl(0, 0%, 50%);
   --grey-50: hsl(0, 0%, 96%);
   --white: hsl(0, 100%, 100%);
+
+  --purple-primary: hsl(270, 70%, 60%);
 }
 
 body.light {
@@ -46,4 +48,6 @@ body.dark {
 .dark {
   background-color: var(--color-bg);
   color: var(--color-text);
+  /* Primary Action */
+  --action-color: var(--purple-primary);
 }

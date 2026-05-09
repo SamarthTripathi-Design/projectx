@@ -24,3 +24,12 @@ export interface ModalState {
   secondaryLabel?: string;
   onSecondaryClick?: () => void;
 }
+
+export interface EmpFormstate {
+  name: string;
+  email: string;
+  department: string;
+  doj: string;
+  location: string;
+  employmentType: string;
+}
