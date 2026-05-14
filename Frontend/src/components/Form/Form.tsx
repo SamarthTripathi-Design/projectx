@@ -1,6 +1,6 @@
 import "./Form.css";
 import { SearchableSelect } from "../SearchableSelect/SearchableSelect";
-import { indianStates } from "../constants";
+import { Countries } from "../constants";
 import { useForm, Controller } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import { useContext } from "react";
@@ -51,7 +51,7 @@ export default function Form() {
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="employee-form"
-      noValidate
+      autoComplete="off"
     >
       <div className="row1">
         {/* NAME INPUT */}
@@ -65,6 +65,7 @@ export default function Form() {
             placeholder="Enter name"
             {...register("name", { required: "Name is required" })}
             aria-invalid={errors.name ? "true" : "false"} // Screen reader helper
+            autoComplete="off"
           />
 
           {errors.name && (
@@ -156,7 +157,7 @@ export default function Form() {
                   inputClass={
                     errors.location ? "input-error emp_loc" : "emp_loc"
                   }
-                  options={indianStates}
+                  options={Countries}
                   onSelect={(option) => field.onChange(option.value)}
                   placeholder="Select"
                 />

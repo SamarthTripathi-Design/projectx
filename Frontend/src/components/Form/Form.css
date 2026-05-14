@@ -80,3 +80,7 @@ form .submit-btn {
   font-size: 14px;
   color: #e55050;
 }
+
+.emp_loc::placeholder {
+  color: var(--color-text);
+}

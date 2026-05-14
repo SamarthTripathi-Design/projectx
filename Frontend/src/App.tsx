@@ -31,10 +31,10 @@ const App = () => {
       <Toaster
         position="top-center"
         toastOptions={{
+          duration: 6000,
           style: {
             background: "var(--color-elements)",
             color: "var(--color-text)",
-            // padding: "16px 24px",
           },
         }}
       />

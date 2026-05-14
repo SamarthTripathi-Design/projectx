@@ -1,6 +1,12 @@
 .table-wrapper {
   width: 100%;
   overflow-x: scroll;
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Chrome, Safari, Edge */
+.table-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .table {

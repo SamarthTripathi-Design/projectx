@@ -14,7 +14,7 @@ type ControlBarProps = {
 function ControlBar(props: ControlBarProps) {
   const { modalDetails, setModalDetails } = useContext(EmployeeContext);
 
-  const handleChnage = (
+  const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ): void => {
     const { name, value } = e.target;
@@ -37,7 +37,7 @@ function ControlBar(props: ControlBarProps) {
         type="text"
         className="search"
         placeholder="Search for the Employee"
-        onChange={handleChnage}
+        onChange={handleChange}
         name="search"
         autoComplete="off"
       />
@@ -47,7 +47,7 @@ function ControlBar(props: ControlBarProps) {
           <span>Add</span>
         </button>
         <div className="dropdown_container">
-          <select className="filter" name="filter">
+          <select className="filter" name="filter" onChange={handleChange}>
             <option value="all" data-category="">
               All Employees
             </option>
@@ -59,6 +59,19 @@ function ControlBar(props: ControlBarProps) {
               <option value="Sales" data-category="department">
                 Sales
               </option>
+
+              <option value="Marketing" data-category="department">
+                Marketing
+              </option>
+              <option value="Product" data-category="department">
+                Product
+              </option>
+              <option value="HR" data-category="department">
+                Human Resources
+              </option>
+              <option value="Finance" data-category="department">
+                Finance
+              </option>
             </optgroup>
 
             <optgroup label="Status">
@@ -67,15 +80,6 @@ function ControlBar(props: ControlBarProps) {
               </option>
               <option value="probation" data-category="status">
                 Probation
-              </option>
-            </optgroup>
-
-            <optgroup label="Location">
-              <option value="Remote" data-category="location">
-                Remote
-              </option>
-              <option value="New York" data-category="location">
-                New York
               </option>
             </optgroup>
           </select>

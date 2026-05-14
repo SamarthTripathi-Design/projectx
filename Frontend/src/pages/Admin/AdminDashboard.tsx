@@ -10,14 +10,7 @@ import "./AdminDashboard.css";
 
 function AdminDashboard() {
   const context = useContext(EmployeeContext);
-  const {
-    employees,
-    loading,
-    error,
-    fetchEmployees,
-    setModalIsOpen,
-    modalIsOpen,
-  } = context;
+  const { employees, fetchEmployees } = context;
   const [filter, setFilter] = useState<FilterState>({
     search: "",
     filter: "",
@@ -33,21 +26,37 @@ function AdminDashboard() {
   }
 
   const filteredData = useMemo(() => {
+    // 1. Prepare Search Terms
     const searchTerms = filter.search
       .toLowerCase()
       .split(",")
       .map((t) => t.trim())
       .filter((t) => t !== "");
 
-    if (searchTerms.length === 0) return employees;
+    const filterTerm = filter.filter.toLowerCase();
 
-    let result = employees.filter((emp: Employee) => {
-      return searchTerms.some((term) =>
-        Object.values(emp).some((val) =>
-          String(val).toLowerCase().includes(term),
+    // 2. Initial Search Filter (Partial Match)
+    // If no search terms, start with all employees
+    let result =
+      searchTerms.length === 0
+        ? employees
+        : employees.filter((emp: Employee) =>
+            searchTerms.some((term) =>
+              Object.values(emp).some((val) =>
+                String(val).toLowerCase().includes(term),
+              ),
+            ),
+          );
+
+    // 3. Category Filter (Exact Match)
+    // ONLY run this if filterTerm is actually set to something other than "all"
+    if (filterTerm !== "" && filterTerm !== "all") {
+      result = result.filter((emp: Employee) =>
+        Object.values(emp).some(
+          (val) => String(val).toLowerCase() === filterTerm,
         ),
       );
-    });
+    }
 
     return result;
   }, [filter.search, filter.filter, employees]);
@@ -58,7 +67,7 @@ function AdminDashboard() {
   const handleDelete = (id: string) => {};
 
   return (
-    <div>
+    <div className="admindashboard_cont">
       <ControlBar onFilterChange={setFilter} />
       <Table
         data={tableData}

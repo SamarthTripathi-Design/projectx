@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import type { ReactNode } from "react";
 import type { Employee, ModalState, EmpFormstate } from "../types";
+import { CustomToast } from "../components/CustomToast/CustomToast";
 import toast from "react-hot-toast";
 
 // 1. Define what the Context "Store" looks like
@@ -41,53 +42,67 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchEmployees = async () => {
     setLoading(true);
-    toast.dismiss();
-    toast.loading("Loading...");
+    const toastId = CustomToast("Loading...", "loading");
+
     try {
       const response = await fetch("http://localhost:5000/api/employees");
       if (response.ok) {
         const data = await response.json();
         setEmployees(data);
+        toast.dismiss(toastId);
+        setLoading(false);
       } else {
         throw new Error("Failed to fetch employees");
       }
     } catch (err) {
-      toast.dismiss();
       const errorMsg = err instanceof Error ? err.message : "An error occurred";
-      toast.error(errorMsg);
-    } finally {
-      setLoading(false);
-      toast.dismiss();
+      CustomToast(errorMsg, "error", "OK", Infinity, toastId, () =>
+        setLoading(false),
+      );
     }
   };
 
   const saveEmployee = async (employeeData: EmpFormstate) => {
     setLoading(true);
-    toast.dismiss();
-    toast.loading("Saving Employee...");
-    const response = await fetch("http://localhost:5000/api/employees", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...employeeData,
-        status: "active",
-        salary: "900000",
-      }),
-    });
+    const toastId = CustomToast("Saving...", "loading");
+    try {
+      const response = await fetch("http://localhost:5000/api/employees", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...employeeData,
+          status: "active",
+          salary: "900000",
+        }),
+      });
 
-    // if (response.ok) {
+      if (response.ok) {
+        const data = await response.json(); // Parse BEFORE dismissing
+        CustomToast(
+          "Saving Completed",
+          "success",
+          "OK",
+          Infinity,
+          toastId,
+          () => {
+            fetchEmployees(); // Added parentheses to actually RUN the function
+          },
+        );
 
-    // }
-
-    if (!response.ok) {
-      // This allows your UI to catch specific error messages
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Failed to save employee");
+        return data; // Return here
+      } else {
+        const errorData = await response.json();
+        const errorMsg = errorData.error || "Failed to save employee";
+        throw new Error(errorMsg);
+      }
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : "An error occurred";
+      CustomToast(errorMsg, "error", "OK", Infinity, toastId, () =>
+        setLoading(false),
+      );
     }
-
-    return response.json();
   };
 
   return (

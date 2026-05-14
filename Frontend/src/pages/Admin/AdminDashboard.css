@@ -1,3 +1,10 @@
+.admindashboard_cont {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
 .admin_action-buttons {
   display: flex;
   gap: 15px;
