@@ -7,6 +7,16 @@ export interface Employee {
   role: string; // e.g., 'Admin', 'Developer'
   department: string; // e.g., 'Engineering', 'HR'
   status: "Active" | "Inactive"; // Using a Union type for specific values
+
+  // 🛡️ ADD THESE MISSING FIELDS:
+  doj: string;
+  location: string;
+  employmentType: string;
+
+  // Optional backend metadata fields:
+  createdAt?: string;
+  updatedAt?: string;
+  salary?: number;
 }
 
 export interface FilterState {
@@ -18,7 +28,7 @@ export interface ModalState {
   isOpen: boolean; // Controls visibility
   onClose: () => void; // Function to close the modal
   title: string; // The header text
-  children: ReactNode; // This is where your Form will go!
+  children?: ReactNode;
   primaryLabel?: string;
   onPrimaryClick?: () => void;
   secondaryLabel?: string;

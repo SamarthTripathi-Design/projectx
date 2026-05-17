@@ -5,6 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import { useContext } from "react";
 import { EmployeeContext } from "../../context/EmployeeContext";
+import { useEffect } from "react";
 
 // 1. Interface for Type Safety
 export interface IEmployeeForm {
@@ -16,11 +17,17 @@ export interface IEmployeeForm {
   employmentType: string;
 }
 
-export default function Form() {
-  const { setEmpFormData, saveEmployee } = useContext(EmployeeContext);
+interface FormProps {
+  initialData?: IEmployeeForm & { id?: string | number } & Record<string, any>;
+}
+
+export default function Form({ initialData }: FormProps) {
+  const { setEmpFormData, saveEmployee, updateEmployee } =
+    useContext(EmployeeContext);
   const {
     register,
     handleSubmit,
+    reset,
     control,
     formState: { errors },
   } = useForm<IEmployeeForm>({
@@ -34,17 +41,46 @@ export default function Form() {
     },
   });
 
+  useEffect(() => {
+    if (initialData) {
+      // If the date comes from your table as DD-MM-YYYY, convert it back to YYYY-MM-DD for the HTML input
+      let formattedDoj = initialData.doj;
+      if (
+        initialData.doj.includes("-") &&
+        initialData.doj.split("-")[0].length === 2
+      ) {
+        const [day, month, year] = initialData.doj.split("-");
+        formattedDoj = `${year}-${month}-${day}`;
+      }
+
+      reset({
+        ...initialData,
+        doj: formattedDoj,
+      });
+    } else {
+      reset({
+        name: "",
+        email: "",
+        department: "",
+        doj: new Date().toISOString().split("T")[0],
+        location: "",
+        employmentType: "",
+      });
+    }
+  }, [initialData, reset]);
+
   const onSubmit: SubmitHandler<IEmployeeForm> = (data) => {
     const [year, month, day] = data.doj.split("-");
     const formattedDate = `${day}-${month}-${year}`;
-    const finalizedData = {
-      ...data,
-      doj: formattedDate,
-    };
+    const finalizedData = { ...data, doj: formattedDate };
 
     setEmpFormData(finalizedData);
-    const ndata = saveEmployee(finalizedData);
-    console.log(ndata);
+
+    if (initialData) {
+      updateEmployee(finalizedData);
+    } else {
+      saveEmployee(finalizedData);
+    }
   };
 
   return (
@@ -160,6 +196,7 @@ export default function Form() {
                   options={Countries}
                   onSelect={(option) => field.onChange(option.value)}
                   placeholder="Select"
+                  value={field.value}
                 />
               )}
             />
@@ -199,7 +236,7 @@ export default function Form() {
 
       <div className="btn-row">
         <button type="submit" className="submit-btn">
-          Save
+          {initialData ? "Update" : "Save"}
         </button>
       </div>
     </form>

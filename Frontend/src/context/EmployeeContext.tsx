@@ -14,6 +14,8 @@ interface EmployeeContextType {
   empFormData: EmpFormstate;
   setEmpFormData: React.Dispatch<React.SetStateAction<EmpFormstate>>;
   saveEmployee: (data: EmpFormstate) => Promise<void>;
+  deleteEmployee: (id: string) => Promise<void>;
+  updateEmployee: (data: Employee) => Promise<void>;
 }
 
 // 2. Create the Context with an undefined default
@@ -77,9 +79,14 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
           salary: "900000",
         }),
       });
+      setModalDetails({
+        isOpen: false,
+        onClose: () => {},
+        title: "",
+      });
 
       if (response.ok) {
-        const data = await response.json(); // Parse BEFORE dismissing
+        const data = await response.json();
         CustomToast(
           "Saving Completed",
           "success",
@@ -87,14 +94,104 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
           Infinity,
           toastId,
           () => {
-            fetchEmployees(); // Added parentheses to actually RUN the function
+            fetchEmployees();
           },
         );
 
-        return data; // Return here
+        return data;
       } else {
         const errorData = await response.json();
         const errorMsg = errorData.error || "Failed to save employee";
+        throw new Error(errorMsg);
+      }
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : "An error occurred";
+      CustomToast(errorMsg, "error", "OK", Infinity, toastId, () =>
+        setLoading(false),
+      );
+    }
+  };
+
+  const deleteEmployee = async (id: string) => {
+    setLoading(true);
+    const toastId = CustomToast("Deleting...", "loading");
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/employees/${id}`,
+        {
+          method: "Delete",
+        },
+      );
+      setModalDetails({
+        isOpen: false,
+        onClose: () => {},
+        title: "",
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        CustomToast(
+          "Employee Deleted Sucessfully",
+          "success",
+          "OK",
+          Infinity,
+          toastId,
+          () => {
+            fetchEmployees();
+          },
+        );
+        return data;
+      } else {
+        const errorData = await response.json();
+        const errorMsg = errorData.error || "Failed to delete employee";
+        throw new Error(errorMsg);
+      }
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : "An error occurred";
+      CustomToast(errorMsg, "error", "OK", Infinity, toastId, () =>
+        setLoading(false),
+      );
+    }
+  };
+
+  const updateEmployee = async (employeeData: Employee) => {
+    setLoading(true);
+    const toastId = CustomToast("Updating...", "loading");
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/employees/${employeeData.id}`,
+        {
+          method: "Put",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...employeeData,
+          }),
+        },
+      );
+      setModalDetails({
+        isOpen: false,
+        onClose: () => {},
+        title: "",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        CustomToast(
+          "Update Completed",
+          "success",
+          "OK",
+          Infinity,
+          toastId,
+          () => {
+            fetchEmployees();
+          },
+        );
+
+        return data;
+      } else {
+        const errorData = await response.json();
+        const errorMsg = errorData.error || "Failed to update employee";
         throw new Error(errorMsg);
       }
     } catch (err) {
@@ -116,6 +213,8 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         empFormData,
         setEmpFormData,
         saveEmployee,
+        deleteEmployee,
+        updateEmployee,
       }}
     >
       {children}

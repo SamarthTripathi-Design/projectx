@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./SearchableSelect.css";
 
 interface SelectOption {
@@ -14,6 +14,7 @@ interface SearchableSelectProps {
   listClass?: string; // Class for the floating dropdown
   onSelect: (option: SelectOption) => void; // How you send the choice back to the Form
   id?: string;
+  value: string;
 }
 
 export const SearchableSelect = ({
@@ -24,9 +25,20 @@ export const SearchableSelect = ({
   listClass,
   placeholder,
   id,
+  value,
 }: SearchableSelectProps) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [isListOpen, setIsListopen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (value !== undefined && value !== null && value !== "") {
+      const matchedOption = options.find((opt) => opt.value === value);
+
+      setSearchTerm(matchedOption ? matchedOption.label : String(value));
+    } else {
+      setSearchTerm("");
+    }
+  }, [value, options]);
 
   const filteredOptions = options.filter((opt) =>
     opt.label.toLowerCase().includes(searchTerm.toLowerCase()),

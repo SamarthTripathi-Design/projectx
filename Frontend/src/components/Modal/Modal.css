@@ -25,6 +25,7 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
+  justify-content: space-between;
 }
 
 .modal_header {
@@ -46,4 +47,36 @@
   font-size: 20px;
   color: var(--color-text);
   cursor: pointer;
+}
+
+.modal_info {
+  text-align: center;
+}
+
+.modal_footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.secondarybtn,
+.primarybtn {
+  min-width: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.secondarybtn {
+  background-color: var(--secondary-action-color);
+}
+
+.primarybtn {
+  background-color: var(--primary-action-color);
 }

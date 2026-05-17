@@ -1,16 +1,18 @@
-import { useContext, useEffect, useState } from "react";
+import { Children, useContext, useEffect, useState } from "react";
 import ControlBar from "../../components/ControlBar/ControlBar";
 import Table from "../../components/Table/Table";
 import { EmployeeContext } from "../../context/EmployeeContext";
-import type { FilterState } from "../../types";
+import type { FilterState, ModalState } from "../../types";
 import { useMemo } from "react";
 import type { Employee } from "../../types";
 import { MdOutlineEdit, MdDeleteOutline } from "react-icons/md";
 import "./AdminDashboard.css";
+import Form from "../../components/Form/Form";
 
 function AdminDashboard() {
   const context = useContext(EmployeeContext);
-  const { employees, fetchEmployees } = context;
+  const { employees, fetchEmployees, setModalDetails, deleteEmployee } =
+    context;
   const [filter, setFilter] = useState<FilterState>({
     search: "",
     filter: "",
@@ -61,16 +63,40 @@ function AdminDashboard() {
     return result;
   }, [filter.search, filter.filter, employees]);
 
-  const tableData = filteredData.map(({ id, ...visibleData }) => visibleData);
+  const handleEdit = (employee: Employee) => {
+    console.log(employee);
+    setModalDetails({
+      isOpen: true,
+      title: "Edit Employee",
+      children: <Form initialData={employee} />,
+      onClose: () =>
+        setModalDetails((prev: ModalState) => ({ ...prev, isOpen: false })),
+    });
+  };
 
-  const handleEdit = (employee: Employee) => {};
-  const handleDelete = (id: string) => {};
+  const handleDelete = (id: string) => {
+    setModalDetails({
+      isOpen: true,
+      title: "Alert",
+      children: "Do you want to delete the Employee?",
+      onClose: () =>
+        setModalDetails((prev: ModalState) => ({ ...prev, isOpen: false })),
+      secondaryLabel: "Delete",
+      primaryLabel: "Cancel",
+      onSecondaryClick: () => {
+        deleteEmployee(id);
+      },
+      onPrimaryClick: () =>
+        setModalDetails((prev: ModalState) => ({ ...prev, isOpen: false })),
+    });
+  };
 
   return (
     <div className="admindashboard_cont">
       <ControlBar onFilterChange={setFilter} />
       <Table
-        data={tableData}
+        data={filteredData}
+        excludeKeys={["id"]}
         renderActions={(employee: Employee) => (
           <div className="admin_action-buttons">
             <button

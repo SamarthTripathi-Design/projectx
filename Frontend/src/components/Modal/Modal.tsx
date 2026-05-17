@@ -38,9 +38,7 @@ function Modal({
           </button>
         </div>
 
-        <div className="modal_info">
-          {children} {/* Your AddEmployeeForm will render here */}
-        </div>
+        <div className="modal_info">{children} </div>
 
         <div className="modal_footer">
           {secondaryLabel && (

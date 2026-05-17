@@ -45,7 +45,7 @@ form {
 }
 
 .input-error {
-  border-bottom: 1px solid #e55050;
+  border-bottom: 1px solid var(--secondary-action-color);
 }
 
 .emp_name::placeholder,
@@ -60,15 +60,17 @@ form {
 }
 
 form .submit-btn {
-  width: 100px;
+  min-width: 100px;
   height: 40px;
   padding: 0px 10px;
-  background-color: var(--action-color);
+  background-color: var(--primary-action-color);
   outline: none;
   border: none;
   border-radius: 5px;
   color: white;
   font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .btn-row {
@@ -78,7 +80,7 @@ form .submit-btn {
 
 .error-text {
   font-size: 14px;
-  color: #e55050;
+  color: var(--secondary-action-color);
 }
 
 .emp_loc::placeholder {

@@ -31,7 +31,7 @@ export const indianStates = [
   { label: "Delhi", value: "DL" },
 ];
 
-export const Counteries = [
+export const Countries = [
   { label: "Afghanistan", value: "Afghanistan" },
   { label: "Albania", value: "Albania" },
   { label: "Algeria", value: "Algeria" },
